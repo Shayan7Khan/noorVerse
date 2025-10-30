@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_antonx_boilerplate/core/enums/view_state.dart';
 import 'package:flutter_antonx_boilerplate/core/others/base_view_model.dart';
+import 'package:flutter_antonx_boilerplate/ui/screens/hadith_screen/hadith_screen.dart';
+import 'package:flutter_antonx_boilerplate/ui/screens/quran_screen/quran_screen.dart';
 
 class RootScreenViewModel extends BaseViewModel {
-  List<Widget> allScreen = [
-    // AppDrawer(child: DashboardScreen()),
-    // MyCardScreen(),
-    // CategoryScreen(enableBackButton: false),
-    // ProfileScreen()
+  List<Widget> allScreen = const [
+    QuranScreen(),
+    HadithScreen()
   ];
   int selectedScreen = 0;
 
   bool isEnableBottomBar = true;
 
-  updatedScreenIndex(int index) {
+  void updatedScreenIndex(int index) {
     setState(ViewState.busy);
     selectedScreen = index;
     setState(ViewState.idle);
   }
 
-  updateBottomBarStatus(bool val) {
+  void updateBottomBarStatus(bool val) {
     isEnableBottomBar = val;
     notifyListeners();
   }

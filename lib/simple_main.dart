@@ -3,6 +3,7 @@ import 'package:flutter_antonx_boilerplate/core/enums/env.dart';
 import 'package:flutter_antonx_boilerplate/core/others/logger_customizations/custom_logger.dart';
 import 'package:flutter_antonx_boilerplate/locator.dart';
 import 'package:flutter_antonx_boilerplate/simple_app.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {
   final log = CustomLogger(className: 'Simple Main');
@@ -12,6 +13,9 @@ Future<void> main() async {
 
     // Ensure Flutter binding is initialized
     WidgetsFlutterBinding.ensureInitialized();
+
+    // Load environment variables
+    await dotenv.load(fileName: '.env');
 
     // Setup dependency injection
     await setupLocator(Env.development);

@@ -38,7 +38,7 @@ import 'dart:convert';
 class AuthService {
   late bool isLogin;
   final _localStorageService = locator<LocalStorageService>();
-  final _dbService = locator<DatabaseService>();
+  // final _dbService = locator<DatabaseService>();
   final _mockDbService = locator<MockDatabaseService>();
   UserProfile? userProfile;
   User? currentUser;
@@ -58,7 +58,7 @@ class AuthService {
     if (isLogin) {
       log.d('User is already logged-in');
       await _loadUserFromStorage();
-      await _getUserProfile();
+      // await _getUserProfile();
       await _updateFcmToken();
     } else {
       log.d('@doSetup: User is not logged-in');
@@ -78,15 +78,15 @@ class AuthService {
     }
   }
 
-  _getUserProfile() async {
-    UserProfileResponse response = await _dbService.getUserProfile();
-    if (response.success) {
-      userProfile = response.profile;
-      log.d('Got User Data: ${userProfile?.toJson()}');
-    } else {
-      Get.dialog(AuthDialog(title: 'Title', message: response.error!));
-    }
-  }
+  // _getUserProfile() async {
+  //   UserProfileResponse response = await _dbService.getUserProfile();
+  //   if (response.success) {
+  //     userProfile = response.profile;
+  //     log.d('Got User Data: ${userProfile?.toJson()}');
+  //   } else {
+  //     Get.dialog(AuthDialog(title: 'Title', message: response.error!));
+  //   }
+  // }
 
   ///
   /// Updating FCM Token here...

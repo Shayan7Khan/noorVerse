@@ -5,6 +5,7 @@ import 'package:flutter_antonx_boilerplate/app.dart';
 import 'package:flutter_antonx_boilerplate/core/enums/env.dart';
 import 'package:flutter_antonx_boilerplate/core/others/logger_customizations/custom_logger.dart';
 import 'package:flutter_antonx_boilerplate/firebase_options.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'locator.dart';
 
 Future<void> main() async {
@@ -15,6 +16,7 @@ Future<void> main() async {
     log.e('Testing error logs');
     log.wtf('Testing WTF logs');
     WidgetsFlutterBinding.ensureInitialized();
+    await dotenv.load(fileName: '.env');
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );

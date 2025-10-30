@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_antonx_boilerplate/core/services/localization_service.dart';
+import 'package:flutter_antonx_boilerplate/ui/screens/quran_screen/quran_screen.dart';
 import 'package:flutter_antonx_boilerplate/ui/screens/splash_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -10,9 +11,9 @@ class MyApp extends StatelessWidget {
   // ignore: todo
   //TODO: Update the [_designWidth] & [_designHeight]
 
-  static const double _designWidth = 375;
-  static const double _designHeight = 812;
-  const MyApp({required this.title, Key? key}) : super(key: key);
+  static const double _designWidth = 430;
+  static const double _designHeight = 932;
+  const MyApp({super.key, required this.title});
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(

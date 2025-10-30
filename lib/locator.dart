@@ -21,7 +21,7 @@ setupLocator(Env env) async {
   // Use MockDatabaseService for demo purposes
   // In production, replace with real DatabaseService
   locator.registerSingleton<MockDatabaseService>(MockDatabaseService());
-  locator.registerLazySingleton<DatabaseService>(() => DatabaseService());
+  // locator.registerLazySingleton<DatabaseService>(() => DatabaseService());
 
   locator.registerSingleton<AuthService>(AuthService());
   locator.registerLazySingleton(() => FilePickerService());

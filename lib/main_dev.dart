@@ -5,22 +5,24 @@ import 'package:flutter_antonx_boilerplate/app.dart';
 import 'package:flutter_antonx_boilerplate/core/enums/env.dart';
 import 'package:flutter_antonx_boilerplate/core/others/logger_customizations/custom_logger.dart';
 import 'package:flutter_antonx_boilerplate/firebase_options.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'locator.dart';
 
 Future<void> main() async {
   final log = CustomLogger(className: 'main');
   try {
-    log.i('Testing info logs');
+    log.i('Testing shayan logs');
     log.d('Testing debug logs');
     log.e('Testing error logs');
     log.wtf('Testing WTF logs');
     WidgetsFlutterBinding.ensureInitialized();
+    await dotenv.load(fileName: '.env');
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
     await setupLocator(Env.dev);
-    runApp(const MyApp(title: 'Dev - App Name'));
+    runApp(const MyApp(title: 'Dev - NoorVerse'));
   } catch (e, s) {
     log.d("$e");
     log.d("$s");
