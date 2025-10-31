@@ -89,8 +89,6 @@ class DetailScreen extends StatelessWidget {
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
-
-                              // Arabic Text
                               Text(
                                 mainText,
                                 textAlign: TextAlign.center,

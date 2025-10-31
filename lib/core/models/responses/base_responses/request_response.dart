@@ -1,15 +1,17 @@
 class RequestResponse {
-  late bool success;
+  bool success;
   String? error;
-  late Map<String, dynamic> data;
+  Map<String, dynamic> data;
 
-  RequestResponse(this.success, {this.error});
+  RequestResponse(this.success, {this.error, Map<String, dynamic>? data})
+      : data = data ?? {};
 
-  RequestResponse.fromJson(json) {
-    data = json;
-    success = json['success'];
-    error = json['error'];
-  }
+  RequestResponse.fromJson(json)
+      : success = (json is Map && json['success'] is bool)
+            ? (json['success'] as bool)
+            : true,
+        error = (json is Map) ? (json['error'] as String?) : null,
+        data = (json is Map<String, dynamic>) ? json : {'body': json};
 
   toJson() {
     return {

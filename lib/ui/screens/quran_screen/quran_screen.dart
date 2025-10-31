@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_antonx_boilerplate/core/constants/colors.dart';
 import 'package:flutter_antonx_boilerplate/core/constants/styles.dart';
+import 'package:flutter_antonx_boilerplate/core/enums/view_state.dart';
 import 'package:flutter_antonx_boilerplate/ui/screens/detail_screen/detail_screen.dart';
 import 'package:flutter_antonx_boilerplate/ui/screens/quran_screen/quran_view_model.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,7 +17,6 @@ class QuranScreen extends StatelessWidget {
       create: (_) => QuranViewModel(),
       child: Consumer<QuranViewModel>(
         builder: (context, model, child) {
-          final filteredVerses = model.filteredVerses;
           return SafeArea(
             child: Scaffold(
               backgroundColor: scaffoldBackgroundColor,
@@ -49,6 +49,18 @@ class QuranScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                   if (model.state == ViewState.loading)
+                    const Center(
+                      child: CircularProgressIndicator(color: Colors.white),
+                    ),
+                  if (model.state == ViewState.error)
+                    Center(
+                      child: Text(
+                        model.errorMessage ?? 'Error loading data',
+                        style: TextStyle(color: Colors.red, fontSize: 18.sp),
+                      ),
+                    ),
+                  if (model.state == ViewState.idle)
                   Positioned(
                     top: 192.h,
                     left: 20.w,
@@ -83,9 +95,9 @@ class QuranScreen extends StatelessWidget {
                     right: 10.w,
                     bottom: 0,
                     child: ListView.builder(
-                      itemCount: filteredVerses.length,
+                      itemCount: model.filteredVerses.length,
                       itemBuilder: (context, index) {
-                        final verse = filteredVerses[index];
+                        final verse = model.filteredVerses[index];
                         return Padding(
                           padding: EdgeInsets.symmetric(
                             horizontal: 10.w,
@@ -109,7 +121,7 @@ class QuranScreen extends StatelessWidget {
                                 color: Colors.black.withValues(alpha: 0.6),
                                 borderRadius: BorderRadius.circular(12.r),
                                 border: Border.all(
-                                  color:primaryColor.withValues(alpha: 0.7)
+                                  color: primaryColor.withValues(alpha: 0.7),
                                 ),
                               ),
                               padding: EdgeInsets.symmetric(
@@ -126,14 +138,14 @@ class QuranScreen extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          verse.title,
+                                          verse.englishTranslation,
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 18.sp,
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),
-                                        SizedBox(height: 4.h),
+                                       4.verticalSpace,
                                         Text(
                                           "${verse.surahName} (${verse.verseNumber})",
                                           style: TextStyle(

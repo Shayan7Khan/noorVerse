@@ -2,21 +2,19 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_antonx_boilerplate/core/config/config.dart';
 import 'package:flutter_antonx_boilerplate/core/models/responses/base_responses/request_response.dart';
-import 'package:flutter_antonx_boilerplate/core/services/local_storage_service.dart';
 
 import '../../locator.dart';
 
 class ApiServices {
   final _config = locator<Config>();
   Future<Dio> launchDio() async {
-    String? accessToken = locator<LocalStorageService>().accessToken;
     Dio dio = Dio();
     dio.interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
     // dio.interceptors.add(
     //     DioCacheManager(CacheConfig(baseUrl: EndPoint.baseUrl)).interceptor);
     dio.options.headers['Content-Type'] = 'application/json';
     dio.options.headers["accept"] = 'application/json';
-    dio.options.headers["Authorization"] = 'Bearer $accessToken';
+    // dio.options.headers["Authorization"] = 'Bearer $accessToken';
 
     dio.options.followRedirects = false;
     dio.options.validateStatus = (s) {
@@ -31,11 +29,17 @@ class ApiServices {
 
   get({required String endPoint, params}) async {
     Dio dio = await launchDio();
+
+    final String finalUrl = '${_config.baseUrl}'.isEmpty
+        ? endPoint
+        : '${_config.baseUrl}/$endPoint';
+
     final response = await dio
-        .get('${_config.baseUrl}/$endPoint', queryParameters: params)
+        .get(finalUrl, queryParameters: params)
         .catchError((e) {
       debugPrint('Unexpected Error');
     });
+
     if (response.statusCode == 200) {
       return RequestResponse.fromJson(response.data);
     } else if (response.statusCode == 500) {

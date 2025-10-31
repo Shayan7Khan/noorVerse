@@ -1,19 +1,10 @@
 import 'dart:async';
-
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_antonx_boilerplate/core/constants/styles.dart';
-import 'package:flutter_antonx_boilerplate/core/models/other_models/onboarding.dart';
 import 'package:flutter_antonx_boilerplate/core/others/logger_customizations/custom_logger.dart';
-import 'package:flutter_antonx_boilerplate/core/services/auth_service.dart';
-import 'package:flutter_antonx_boilerplate/core/services/local_storage_service.dart';
-import 'package:flutter_antonx_boilerplate/core/services/notifications_service.dart';
-import 'package:flutter_antonx_boilerplate/ui/custom_widgets/dialogs/network_error_dialog.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-
-import '../../locator.dart';
 import 'onboarding/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -49,9 +40,9 @@ class _SplashScreenState extends State<SplashScreen> {
   //     return;
   //   }
 
-    ///
-    ///initializing notification services
-    ///
+  ///
+  ///initializing notification services
+  ///
 
   //   await _notificationService.initConfigure();
 
@@ -116,14 +107,14 @@ class _SplashScreenState extends State<SplashScreen> {
   //   return onboardings;
   // }
 
-
-@override
+  @override
   void initState() {
     super.initState();
     Timer(Duration(seconds: 3), () {
       Get.off(OnboardingScreen());
     });
   }
+
   @override
   Widget build(BuildContext context) {
     ///

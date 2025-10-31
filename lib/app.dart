@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_antonx_boilerplate/core/services/localization_service.dart';
-import 'package:flutter_antonx_boilerplate/ui/screens/quran_screen/quran_screen.dart';
 import 'package:flutter_antonx_boilerplate/ui/screens/splash_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -19,7 +17,6 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(_designWidth, _designHeight),
       builder: (context, widget) => GetMaterialApp(
-        translations: LocalizationService(),
         locale: const Locale("en"),
         title: title,
         home: const SplashScreen(),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_antonx_boilerplate/core/constants/styles.dart';
-import 'package:flutter_antonx_boilerplate/core/models/other_models/onboarding.dart';
 import 'package:flutter_antonx_boilerplate/ui/screens/onboarding/onboarding_view_model.dart';
 import 'package:flutter_antonx_boilerplate/ui/screens/root/root_screen.dart';
 import 'package:flutter_antonx_boilerplate/ui/screens/root/root_screen_view_model.dart';

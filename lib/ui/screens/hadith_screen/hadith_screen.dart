@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_antonx_boilerplate/core/constants/colors.dart';
 import 'package:flutter_antonx_boilerplate/core/constants/styles.dart';
+import 'package:flutter_antonx_boilerplate/core/enums/view_state.dart';
 import 'package:flutter_antonx_boilerplate/ui/screens/detail_screen/detail_screen.dart';
 import 'package:flutter_antonx_boilerplate/ui/screens/hadith_screen/hadith_view_model.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,6 +18,7 @@ class HadithScreen extends StatelessWidget {
       child: Consumer<HadithViewModel>(
         builder: (context, model, child) {
           final filteredHadiths = model.filteredHadiths;
+
           return Scaffold(
             body: Stack(
               children: [
@@ -47,32 +49,44 @@ class HadithScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Positioned(
-                  top: 192.h,
-                  left: 20.w,
-                  right: 20.w,
-                  child: Container(
-                    height: 45.h,
-                    decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.6),
-                      borderRadius: BorderRadius.circular(12.r),
-                      border: Border.all(color: primaryColor),
-                      
+                if (model.state == ViewState.loading)
+                  const Center(
+                    child: CircularProgressIndicator(color: Colors.white),
+                  ),
+                if (model.state == ViewState.error)
+                  Center(
+                    child: Text(
+                      model.errorMessage ?? 'Error loading data',
+                      style: TextStyle(color: Colors.red, fontSize: 18.sp),
                     ),
-                    child: TextField(
-                      onChanged: model.updateSearchText,
-                      cursorColor: primaryColor,
-                      style: TextStyle(fontSize: 16.sp, color: Colors.white),
-                      decoration: InputDecoration(
-                        hintText: 'Search Hadith',
-                        hintStyle: TextStyle(color: Colors.grey),
-                        prefixIcon: Icon(Icons.search, color: Colors.grey),
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(vertical: 5.h),
+                  ),
+                if (model.state == ViewState.idle)
+                  Positioned(
+                    top: 192.h,
+                    left: 20.w,
+                    right: 20.w,
+                    child: Container(
+                      height: 45.h,
+                      decoration: BoxDecoration(
+                        color: Colors.black.withValues(alpha: 0.6),
+                        borderRadius: BorderRadius.circular(12.r),
+                        border: Border.all(color: primaryColor),
+                      ),
+                      child: TextField(
+                        onChanged: model.updateSearchText,
+                        cursorColor: primaryColor,
+                        style: TextStyle(fontSize: 16.sp, color: Colors.white),
+                        decoration: InputDecoration(
+                          hintText: 'Search Hadith',
+                          hintStyle: TextStyle(color: Colors.grey),
+                          prefixIcon: Icon(Icons.search, color: Colors.grey),
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(vertical: 5.h),
+                        ),
                       ),
                     ),
                   ),
-                ),
+
                 Positioned(
                   top: 250.h,
                   left: 0,
@@ -88,8 +102,8 @@ class HadithScreen extends StatelessWidget {
                           Get.to(
                             DetailScreen(
                               title: hadith.title,
-                              mainText: hadith.arabicText,
-                              translation: hadith.englishTranslation,
+                              mainText: hadith.arabic,
+                              translation: hadith.english,
                               reference: hadith.reference,
                               narrator: hadith.narrator,
                             ),
@@ -104,11 +118,12 @@ class HadithScreen extends StatelessWidget {
                             border: Border.all(color: primaryColor),
                           ),
                           child: Text(
-                            hadith.title,
+                            hadith.english.length > 80
+                                ? hadith.english.substring(0, 80) + '...'
+                                : hadith.english,
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w500,
+                              fontSize: 16.sp,
                             ),
                           ),
                         ),
